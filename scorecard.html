@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BigHammer.ai · WhatsApp · Benchmark scorecard</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="core.css?v=2">
-<link rel="stylesheet" href="scorecard.css?v=2">
+<link rel="stylesheet" href="core.css?v=3">
+<link rel="stylesheet" href="scorecard.css?v=3">
 </head>
 <body>
 <div class="sc-page">
@@ -15,7 +15,7 @@
   <p class="sc-lead">Goal: registrations from the invite and live attendance from the two reminders, without damaging the number's quality rating. Each message is scored against Meta's template rules and published WhatsApp Business benchmarks. Headline numbers come from the table; projections are judgment.</p>
   <div id="sc"></div>
 </div>
-<script src="data.js?v=2"></script>
+<script src="data.js?v=3"></script>
 <script>
 window.RUBRIC = (function () {
   const S = new Proxy({}, { get: (_, k) => window.SC[k] });
@@ -27,15 +27,15 @@ window.RUBRIC = (function () {
       { id: "len", label: "Length", weight: 3, how: "Template body limit is 1,024 characters (hard). Under 300 characters scores 5 (reads in one screen without scrolling); 301–500 scores 4; 501–800 scores 3; 801–1,024 scores 2; over 1,024 would be rejected (1).",
         score: (cell) => { const n = bodyOf(cell).length; return { s: n <= 300 ? 5 : n <= 500 ? 4 : n <= 800 ? 3 : n <= 1024 ? 2 : 1, why: `${n} / 1024 chars` }; } },
       { id: "links", label: "One link", weight: 2, how: "One URL, ideally as a button, scores 5; the same link as text and as a button scores 4; two different links scores 2; no link scores 3.",
-        score: (cell) => { const m = last(cell); const n = (bodyOf(cell).match(S.URL_RE) || []).length; const btn = (m.buttons || []).filter(b => b.url).length; if (n === 0 && btn === 1) return { s: 5, why: "button only" }; if (n === 1 && btn === 1) return { s: 4, why: "text link + button (same URL)" }; if (n + btn === 0) return { s: 3, why: "no link" }; return { s: n === 1 ? 5 : 2, why: `${n} text link${n > 1 ? "s" : ""}` }; } },
+        score: (cell) => { const m = last(cell); const n = S.links(bodyOf(cell)); const btn = (m.buttons || []).filter(b => b.url).length; if (n === 0 && btn === 1) return { s: 5, why: "button only" }; if (n === 1 && btn === 1) return { s: 4, why: "text link + button (same URL)" }; if (n + btn === 0) return { s: 3, why: "no link" }; return { s: n === 1 ? 5 : 2, why: `${n} text link${n > 1 ? "s" : ""}` }; } },
       { id: "optout", label: "Opt-out", weight: 3, how: "Marketing templates need an opt-out path to pass review and to protect the quality rating: footer or body line present scores 5; missing scores 1. Utility reminders score 4 without one (opt-out expected in the flow, not every message).",
         score: (cell) => { const m = last(cell); const has = /stop|opt out|unsubscribe/i.test((m.footer || "") + " " + m.body); const util = (cell.kinds || []).includes("utility"); return has ? { s: 5, why: "opt-out present" } : util ? { s: 4, why: "utility, opt-out handled in flow" } : { s: 1, why: "no opt-out" }; } },
       { id: "pers", label: "Personalization", weight: 2, how: "Name plus a named sender ('Srinath here from BigHammer.ai') scores 5; name only scores 4; nothing scores 2.",
         score: (cell) => { const b = last(cell).body; if (/\{\{first_name\}\}/.test(b) && /Srinath/.test(b)) return { s: 5, why: "name + named sender" }; if (/\{\{first_name\}\}/.test(b)) return { s: 4, why: "first name" }; if (/Srinath/.test(b)) return { s: 4, why: "named sender" }; return { s: 2, why: "generic" }; } },
-      { id: "cta", label: "Single clear CTA", weight: 3, how: "One ask with the session named and the time or date scores 5; one ask without the time scores 4; two asks (register and book a demo) scores 3.",
-        score: (cell) => { const b = bodyOf(cell); const asks = (b.match(/grab a seat|join|register|book a demo|link:/gi) || []).length; const time = /Thursday 15 October|12 PM ET|tomorrow|in an hour/i.test(b); if (asks <= 1 || /^Starting in an hour/i.test(b)) return { s: time ? 5 : 4, why: time ? "one ask, time named" : "one ask" }; return { s: 3, why: `${asks} asks (incl. demo/voucher)` }; } },
-      { id: "cat", label: "Category fit", weight: 2, how: "Reminder copy that stays transactional (link, time, what to bring) qualifies as Utility and costs less scores 5; promotional lines (vouchers, 'up to 75%') in a reminder risk reclassification as Marketing (Meta's April 2025 rule) scores 3; the invite is Marketing by nature and scores 4 when its claims are factual.",
-        score: (cell) => { const b = bodyOf(cell); const util = (cell.kinds || []).includes("utility"); if (!util) return { s: 4, why: "marketing template, factual claims" }; return /voucher|gift card|up to \d+%/i.test(b) ? { s: 3, why: "promotional line in a utility reminder" } : { s: 5, why: "transactional" }; } },
+      { id: "cta", label: "Single clear CTA", weight: 3, how: "One ask (join or register) with the time or date named scores 5; one ask without the time scores 4; a second ask in the same message (book a demo, win a voucher) scores 3.",
+        score: (cell) => { const b = bodyOf(cell); const second = /book a demo|voucher|gift card/i.test(b); const time = /Thursday 15 October|12 PM ET|tomorrow|in an hour/i.test(b); if (!second) return { s: time ? 5 : 4, why: time ? "one ask, time named" : "one ask" }; return { s: 3, why: "second ask (demo / voucher) in the same message" }; } },
+      { id: "cat", label: "Category fit", weight: 2, how: "Reminder copy that stays transactional (link, time, what to bring) qualifies as Utility and costs less scores 5; promotional lines (vouchers, 'up to 75%') in a reminder risk reclassification as Marketing (Meta's April 2025 rule) scores 3; the invite is a Marketing template by nature and scores 4.",
+        score: (cell) => { const b = bodyOf(cell); const util = (cell.kinds || []).includes("utility"); if (!util) return { s: 4, why: "marketing template by nature" }; return /voucher|gift card|up to \d+%/i.test(b) ? { s: 3, why: "promotional line in a utility reminder" } : { s: 5, why: "transactional" }; } },
       { id: "tone", label: "Conversational tone", weight: 1, how: "Short sentences, first person, no caps or exclamation scores 5; one shouty element scores 3.",
         score: (cell) => { const b = bodyOf(cell); return /!|[A-Z]{4,}/.test(b) ? { s: 3, why: "caps or exclamation" } : { s: 5, why: "conversational" }; } }
     ],
@@ -45,15 +45,16 @@ window.RUBRIC = (function () {
       { metric: "Click-through rate", value: "15–80% reported across utility and marketing templates (vendor data, wide range)", source: "Sendwo 2025", url: "https://sendwo.com/blog/whatsapp-click-through-rate-benchmarks-report/" },
       { metric: "Template categories", value: "Marketing, Utility, Authentication; since April 2025 Meta reclassifies promotional 'utility' templates as Marketing", source: "Bird 2025 (citing Meta policy)", url: "https://bir.ch/blog/whatsapp-for-business" },
       { metric: "24-hour service window", value: "Free-form messages only within 24 h of the user's last message; otherwise an approved template is required", source: "Meta for Developers (WhatsApp Business Platform)", url: "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/send-messages" },
-      { metric: "Template limits", value: "Body 1,024 characters; up to 10 buttons grouped by type, max 1 phone and 1 website button (legacy: 3 quick-reply or 2 CTA)", source: "Wati / DelightChat (citing Meta)", url: "https://support.wati.io/en/articles/11463458-whatsapp-template-message-guidelines-naming-formatting-and-translations" },
+      { metric: "Template limits", value: "Body 1,024 characters; up to 10 buttons grouped by type, at most 1 phone-number button and 2 URL buttons (legacy rule: 3 quick-reply or 2 call-to-action)", source: "Wati / DelightChat (citing Meta)", url: "https://support.wati.io/en/articles/11463458-whatsapp-template-message-guidelines-naming-formatting-and-translations" },
       { metric: "Quality rating and tiers", value: "Green / Yellow / Red from 7-day block and report signals; messaging tiers 250 → 1K → 10K → 100K → unlimited; low rating blocks upgrades", source: "AiSensy (citing Meta)", url: "https://m.aisensy.com/blog/whatsapp-message-limits-guide/" },
       { metric: "Opt-in", value: "Explicit opt-in required before marketing sends; unsolicited promotional messages drive blocks and damage the rating", source: "AiSensy (citing Meta policy)", url: "https://m.aisensy.com/blog/whatsapp-message-limits-guide/" },
+      { metric: "Webinar live attendance baseline", value: "41.6% median of registrants across 12.4K webinars (all channels); BigHammer's own three webinars ran at 9.9%, 16.4% and 6.4%", source: "Digital Applied 2026; BigHammer Webinar 3 report (internal)", url: "https://www.digitalapplied.com/blog/webinar-statistics-2026-attendance-conversion-data" },
       { metric: "Reminder impact on attendance", value: "Vendor claims: WhatsApp reminder sequences +62% live attendance; multi-channel timed reminders from ~35% to ~85% (not independently verified)", source: "wa.expert; aevent.com", url: "https://wa.expert/pages/whatsapp-webinar-reminder" }
     ],
     projections: [
       { label: "Invite read rate (opted-in list)", value: "70–90%", basis: "Segmented, named sender, business verified; drops sharply if sent without opt-in." },
       { label: "Invite → registration", value: "5–15% of reads", basis: "Vendor CTR ranges are wide; one button, clear time, $50 incentive." },
-      { label: "Reminder → live attendance", value: "+15–30 points over email-only", basis: "Vendor claims of +62% are unverified; a conservative uplift on the 41.6% email baseline." },
+      { label: "Reminder → live attendance", value: "+15–30 points over an email-only reminder programme", basis: "Vendor claims of +62% are unverified; applied to BigHammer's own 6–16% history this means roughly 20–45%, still at or below the 41.6% all-channel median." },
       { label: "Block/report risk", value: "Low with opt-in, high without", basis: "The invite copy is friendly but is still an unsolicited marketing template if the list is cold." }
     ],
     notes: [
@@ -66,6 +67,6 @@ window.RUBRIC = (function () {
   };
 })();
 </script>
-<script src="scorecard.js?v=2"></script>
+<script src="scorecard.js?v=3"></script>
 </body>
 </html>
