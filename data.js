@@ -75,7 +75,7 @@ $50 voucher for the first 5 demo bookings today. See you soon.`);
   const campaigns = [
     {
       id: "wa", title: "WhatsApp invite + reminders (3 messages)", kinds: ["template", "utility"],
-      subtitle: "First outbound must be an approved template (opt-in required; Marketing category; body ≤ 1,024 chars; opt-out needed). The two reminders are Utility templates if sent outside a 24-hour service window, which is the usual case. Bubbles are shown as the recipient sees them: the business's messages arrive as white incoming bubbles with a green verified tick on the business name.",
+      subtitle: "The buttons and the opt-out footer do NOT appear automatically from a link in the text: they are template components (URL button, quick-reply buttons, footer) that have to be defined when the template is created and approved in WhatsApp Manager, and they only exist on the WhatsApp Business Platform (Cloud API via a provider), not in the small-business WhatsApp Business app. A bare URL in the body renders as a tappable link only. First outbound must be an approved template (opt-in required; Marketing category; body ≤ 1,024 chars; opt-out needed). The two reminders are Utility templates if sent outside a 24-hour service window, which is the usual case. Bubbles are shown as the recipient sees them: the business's messages arrive as white incoming bubbles with a green verified tick on the business name.",
       columns: [
         { id: "m1", label: "Message 1", title: "invite", day: "Day 0 · 10 AM (cold or opted-in list)" },
         { id: "m2", label: "Message 2", title: "reminder, day before", day: "Webinar day −1 · 10 AM" },
