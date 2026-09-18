@@ -1,0 +1,3 @@
+/* styles.css — WhatsApp site overrides. Core shell in core.css, WhatsApp chrome in whatsapp.css. */
+:root{--brand:#1daa61}
+.brand-mark.wa-mark{background:#25d366}

@@ -1,0 +1,59 @@
+/* whatsapp.css — WhatsApp for iOS chrome (chat with a business account + chat list), matched to the 2026 App Store screenshots. */
+.screen.whatsapp{background:#fff;color:#000;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+.wa-ic{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:0 0 auto}
+.wa-ic svg{display:block}
+.wa-sp{flex:1}
+.wa-nav{display:flex;align-items:center;gap:8px;height:54px;padding:0 6px 0 2px;background:#f6f6f6;border-bottom:1px solid #d9d9d9;flex:0 0 auto}
+.wa-back{display:inline-flex;align-items:center;gap:0;color:#0a7cff;font-size:17px;font-weight:600}
+.wa-count{font-size:15px;margin-left:-2px}
+.wa-title{flex:1;min-width:0}
+.wa-name{font-size:16px;font-weight:600;line-height:20px;display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-sub{font-size:12px;color:#8e8e93;line-height:16px}
+.wa-body{background:#efe7dd}
+.wa-wall{min-height:100%;padding:8px 10px 6px;background-color:#efe7dd;background-image:radial-gradient(circle at 20% 30%,rgba(0,0,0,.035) 0 6px,transparent 7px),radial-gradient(circle at 70% 60%,rgba(0,0,0,.03) 0 5px,transparent 6px),radial-gradient(circle at 45% 85%,rgba(0,0,0,.03) 0 4px,transparent 5px);background-size:120px 120px,140px 140px,90px 90px}
+.wa-pill{display:table;margin:6px auto 8px;background:rgba(255,255,255,.9);color:#54656f;font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.wa-sys{margin:0 auto 10px;max-width:330px;background:#fff6d4;color:#54656f;font-size:12.5px;line-height:17px;padding:8px 12px;border-radius:8px;text-align:center;box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.wa-sys svg{vertical-align:-1px;margin-right:3px}
+.wa-row{display:flex;flex-direction:column;margin:4px 0 6px}
+.wa-row.in{align-items:flex-start}
+.wa-row.out{align-items:flex-end}
+.wa-bub{position:relative;max-width:300px;border-radius:12px;padding:6px 8px 6px 10px;font-size:16.5px;line-height:21px;box-shadow:0 1px .5px rgba(0,0,0,.13);word-wrap:break-word}
+.wa-row.in .wa-bub{background:#fff;border-top-left-radius:3px}
+.wa-row.out .wa-bub{background:#d9fdd3;border-top-right-radius:3px}
+.wa-row.in .wa-bub::before{content:"";position:absolute;left:-7px;top:0;border:8px solid transparent;border-top-color:#fff;border-right-color:#fff;border-radius:0 0 0 2px}
+.wa-hdr{font-weight:700;margin:2px 0 4px}
+.wa-ftr{font-size:12.5px;color:#8e8e93;margin:6px 0 2px}
+.wa-txt{white-space:normal}
+.wa-meta{float:right;position:relative;top:7px;margin:0 0 0 8px;display:inline-flex;align-items:center;gap:3px;font-size:11px;color:#8e8e93;line-height:14px}
+.wa-link{color:#027eb5;text-decoration:underline;word-break:break-all}
+.wa-prev{display:block;text-decoration:none;background:#f5f6f6;border-radius:8px;margin:2px 0 8px;overflow:hidden;color:#000}
+.wa-prev-img{height:110px;background:linear-gradient(135deg,#0d1b2a,#1f3a5f 60%,#0a66c2)}
+.wa-prev-t{font-size:14px;font-weight:600;padding:8px 10px 2px;line-height:18px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wa-prev-d{font-size:12px;color:#8e8e93;padding:0 10px 8px}
+body.no-preview .wa-prev{display:none}
+.wa-btns{display:flex;flex-direction:column;gap:3px;margin-top:3px;width:100%;max-width:300px}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:#fff;color:#0a7cff;font-size:15px;font-weight:500;padding:10px;border-radius:12px;text-decoration:none;box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.wa-composer{flex:0 0 auto;display:flex;align-items:center;gap:2px;padding:6px 6px 24px 4px;background:#f6f6f6;border-top:1px solid #d9d9d9}
+.wa-input{flex:1;display:flex;align-items:center;justify-content:flex-end;height:36px;border:1px solid #d1d1d6;border-radius:18px;background:#fff;padding:0 8px}
+/* chat list */
+.wa-lnav{display:flex;align-items:center;height:44px;padding:0 12px 0 16px;gap:4px;flex:0 0 auto}
+.wa-lmore{width:34px;height:34px;border-radius:50%;background:#f0f0f0;display:inline-flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:1px;color:#000}
+.wa-fabsm{width:34px;height:34px;border-radius:50%;background:#1daa61;display:inline-flex;align-items:center;justify-content:center}
+.wa-ltitle{font-size:34px;font-weight:700;letter-spacing:-.4px;padding:2px 16px 6px}
+.wa-search{margin:4px 16px 10px;height:36px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;gap:6px;padding:0 10px;font-size:16px;color:#8e8e93}
+.wa-filters{display:flex;gap:8px;padding:0 16px 8px}
+.wa-filters span{font-size:14px;color:#54656f;background:#f0f0f0;padding:6px 12px;border-radius:16px}
+.wa-filters span.on{background:#d9fdd3;color:#1b8755;font-weight:600}
+.wa-list{padding:0 0 90px}
+.wa-lrow{display:flex;gap:12px;padding:8px 16px}
+.wa-lmain{flex:1;min-width:0;border-bottom:1px solid #ececec;padding-bottom:10px}
+.wa-l1{display:flex;align-items:baseline;justify-content:space-between}
+.wa-lname{font-size:17px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-ltime{font-size:14px;color:#8e8e93}
+.wa-ltime.un{color:#1daa61}
+.wa-l2{display:flex;align-items:center;gap:8px;margin-top:2px}
+.wa-lsnip{flex:1;font-size:15px;color:#8e8e93;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:20px}
+.wa-badge{min-width:20px;height:20px;border-radius:10px;background:#1daa61;color:#fff;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+.wa-tabs{flex:0 0 auto;display:flex;justify-content:space-around;height:84px;padding:8px 0 24px;background:#f6f6f6;border-top:1px solid #d9d9d9}
+.wa-tabs div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:#8e8e93;width:72px}
+.wa-tabs div.on{color:#0a7cff}
